@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SocialFlow</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f5fb;--card:#fff;--ink:#14172b;--mute:#6b7190;--line:#e4e6f2;--brand:#5b5bf0;--soft:#eceafe;--ok:#12a676;--warn:#d98200;--bad:#d9455f;--side:#14172b;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="dark"]{--bg:#0e1020;--card:#171a30;--ink:#eceefb;--mute:#9aa0c4;--line:#262a4a;--soft:#25244f;--side:#0a0c18;color-scheme:dark}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1020;--card:#171a30;--ink:#eceefb;--mute:#9aa0c4;--line:#262a4a;--soft:#25244f;--side:#0a0c18;color-scheme:dark}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Plus Jakarta Sans",system-ui,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+.app{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+aside{background:var(--side);color:#cfd2ee;padding:22px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px}
+.logo{font-weight:800;font-size:21px;color:#fff;padding:0 10px 18px;letter-spacing:-.5px}
+.logo i{font-style:normal;color:#8c8cff}
+aside a{color:inherit;text-decoration:none;padding:9px 12px;border-radius:10px;font-weight:500}
+aside a:hover{background:rgba(255,255,255,.07)}
+aside a.on{background:var(--brand);color:#fff}
+.me{margin-top:auto;padding:12px;font-size:13px;border-top:1px solid rgba(255,255,255,.1)}
+main{padding:28px 32px;max-width:1180px;width:100%}
+h1{font-size:26px;margin:0 0 4px;letter-spacing:-.5px}
+h2{font-size:16px;margin:0 0 12px}
+.sub{color:var(--mute);margin:0 0 22px}
+.grid{display:grid;gap:16px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.stat b{display:block;font-size:28px;letter-spacing:-1px}
+.stat span{color:var(--mute);font-size:13px}
+.btn{background:var(--brand);color:#fff;border:0;border-radius:10px;padding:9px 16px;font-weight:700;cursor:pointer}
+.btn.alt{background:var(--soft);color:var(--brand)}
+.btn.bad{background:transparent;color:var(--bad);padding:6px 10px}
+.btn.sm{padding:5px 11px;font-size:13px}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+label{display:block;font-weight:700;font-size:13px;margin:12px 0 5px}
+input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 12px}
+textarea{min-height:110px;resize:vertical}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.sp{justify-content:space-between}
+.item{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.item:last-child{border:0}
+.tag{font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--soft);color:var(--brand)}
+.tag.scheduled{background:#fff1d6;color:var(--warn)}.tag.published{background:#d7f5e9;color:var(--ok)}.tag.failed{background:#fde0e6;color:var(--bad)}.tag.draft{background:var(--line);color:var(--mute)}
+.mute{color:var(--mute);font-size:13px}
+.chart{width:100%;height:auto}.chart text{fill:var(--mute);font-size:11px}
+.bar{height:8px;border-radius:9px;background:var(--line);overflow:hidden;margin-top:8px}.bar div{height:100%;background:var(--brand)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal div{min-height:84px;border:1px solid var(--line);border-radius:10px;padding:6px;font-size:12px;background:var(--card);overflow:hidden}
+.cal .h{min-height:0;border:0;background:none;font-weight:700;color:var(--mute)}
+.cal .t{outline:2px solid var(--brand)}
+.cal em{display:block;font-style:normal;background:var(--soft);color:var(--brand);border-radius:5px;padding:1px 5px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.plat{display:flex;gap:14px;flex-wrap:wrap}.plat label{display:flex;gap:6px;align-items:center;margin:0;font-weight:500}.plat input{width:auto}
+.auth{min-height:100vh;display:grid;grid-template-columns:1.1fr 1fr}
+.hero{background:linear-gradient(160deg,#14172b,#3a37b8);color:#fff;padding:60px;display:flex;flex-direction:column;justify-content:center}
+.hero h1{font-size:44px;line-height:1.1;max-width:500px}.hero p{max-width:440px;color:#c9cbf2}
+.form{display:flex;align-items:center;justify-content:center;padding:30px}.form .card{width:100%;max-width:380px}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:10px;font-weight:700}
+@media(max-width:820px){.app{grid-template-columns:1fr}aside{position:static;height:auto;flex-direction:row;overflow-x:auto;padding:10px}.logo,.me{display:none}aside a{white-space:nowrap}main{padding:20px 16px}.auth{grid-template-columns:1fr}.hero{padding:34px}.hero h1{font-size:32px}.cal div{min-height:60px}}
+.ov{position:fixed;inset:0;background:rgba(10,12,30,.5);display:grid;place-items:center;z-index:9;padding:16px}.ov .card{width:100%;max-width:440px;max-height:90vh;overflow:auto}
+.tbl{width:100%;border-collapse:collapse}.tbl th,.tbl td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:middle}.tbl th{color:var(--mute)}.tblw{overflow-x:auto}.tbl .row{flex-wrap:nowrap}
+.tag.active{background:#d7f5e9;color:var(--ok)}.tag.suspended{background:#fde0e6;color:var(--bad)}.tag.inactive{background:var(--line);color:var(--mute)}
+aside.adm{background:#1a0f3c}aside.adm a.on{background:#6d4bff}
+</style></head>
+<body><div id="root"></div>
+<script>
+const K='socialflow-v2',$=s=>document.querySelector(s),z=n=>String(n).padStart(2,'0');
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const iso=(dd,h)=>{const d=new Date();d.setDate(d.getDate()+dd);return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}T${z(h)}:00`};
+const PL=['Instagram','Facebook','LinkedIn'];
+const seed=()=>({user:null,theme:'auto',ws:'agency',
+ clients:[{id:1,name:'Brew & Bloom Cafe',industry:'Food',email:'hello@brewbloom.com'},{id:2,name:'FitNest Gym',industry:'Fitness',email:'team@fitnest.in'}],
+ accounts:{Instagram:'@socialflow.demo',Facebook:'',LinkedIn:''},
+ team:[{name:'You',role:'Admin'},{name:'Asha',role:'Editor'}],
+ posts:[
+  {id:1,caption:'Our monsoon menu is live. Come taste it!',tags:'#coffee #monsoon',platforms:['Instagram'],date:iso(1,10),status:'scheduled',client:1,reach:0,eng:0},
+  {id:2,caption:'5 mobility moves to start your morning.',tags:'#fitness',platforms:['Instagram','Facebook'],date:iso(3,9),status:'scheduled',client:2,reach:0,eng:0},
+  {id:3,caption:'Behind the scenes at our roastery.',tags:'#roastery',platforms:['Instagram'],date:iso(-2,12),status:'published',client:1,reach:8400,eng:6.2},
+  {id:4,caption:'Member spotlight: Ravi hits 100 days.',tags:'#motivation',platforms:['Facebook'],date:iso(-5,18),status:'published',client:2,reach:5100,eng:4.8},
+  {id:5,caption:'Hiring: community manager.',tags:'#jobs',platforms:['LinkedIn'],date:iso(-1,11),status:'failed',client:2,reach:0,eng:0},
+  {id:6,caption:'Draft: Diwali offer teaser',tags:'#diwali',platforms:['Instagram'],date:iso(6,10),status:'draft',client:1,reach:0,eng:0}],
+ camps:[{id:1,name:'Monsoon Menu Launch',goal:'Grow Instagram reach',budget:25000,progress:60},{id:2,name:'New Year Fitness Drive',goal:'Get 200 sign-ups',budget:40000,progress:25}],
+ hist:[18,24,31,29,42,55]});
+const hs=s=>{let h=5381;for(const c of 'sf:'+s)h=(h*33)^c.charCodeAt(0);return (h>>>0).toString(36)};
+const emptyWs=t=>({...seed(),ws:t,clients:[],posts:[],camps:[],accounts:{Instagram:'',Facebook:'',LinkedIn:''},team:[],hist:[0,0,0,0,0,0]});
+const seedA=()=>({users:[{id:1,name:'Platform Admin',email:'admin@socialflow.demo',h:hs('Admin@123'),role:'Super Admin',ws:0,status:'active',at:iso(-60,9)},{id:2,name:'Maya Rao',email:'maya@brewbloom.com',h:hs('User@123'),role:'Workspace Admin',ws:1,status:'active',at:iso(-30,9)},{id:3,name:'Dev Nair',email:'dev@fitnest.in',h:hs('User@123'),role:'Workspace Admin',ws:2,status:'active',at:iso(-12,9)}],
+ wss:{1:{name:'Brew & Bloom Studio',data:seed()},2:{name:'FitNest Gym',data:emptyWs('business')}},log:[{t:iso(-2,9),m:'Maya Rao created workspace Brew & Bloom Studio'}],session:null});
+let A;try{A=JSON.parse(localStorage.getItem(K))}catch(e){}A=A||seedA();let S=null;
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(A))}catch(e){}};
+const log=m=>{A.log.unshift({t:iso(0,new Date().getHours()),m});A.log=A.log.slice(0,60)};
+
+let route=(location.hash||'#dashboard').slice(1),edit=null,cm=0;
+const nid=a=>Math.max(0,...a.map(x=>x.id))+1;
+const fd=s=>new Date(s).toLocaleString([],{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+const cname=id=>(S.clients.find(c=>c.id==id)||{name:'No client'}).name;
+const toast=t=>{const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.append(e);setTimeout(()=>e.remove(),2200)};
+const bars=(d,l,c='var(--brand)')=>{const m=Math.max(...d,1);return `<svg viewBox="0 0 ${d.length*54} 142" class="chart">`+d.map((v,i)=>{const h=v/m*86;return `<rect x="${i*54+9}" y="${112-h}" width="36" height="${h}" rx="7" fill="${c}"/><text x="${i*54+27}" y="${106-h}" text-anchor="middle">${v}</text><text x="${i*54+27}" y="132" text-anchor="middle">${l[i]}</text>`}).join('')+'</svg>'};
+const st=s=>`<span class="tag ${s}">${s}</span>`;
+const my=n=>S.posts.filter(p=>p.status==n);
+
+/* ---------- views ---------- */
+const V={
+dashboard(){const pub=my('published'),r=pub.reduce((a,p)=>a+p.reach,0),e=pub.length?(pub.reduce((a,p)=>a+p.eng,0)/pub.length).toFixed(1):0,f=my('failed');
+ const up=my('scheduled').sort((a,b)=>a.date.localeCompare(b.date));
+ return `<h1>Good day, ${esc(S.user.name)}</h1><p class="sub">Here is what is happening across your ${esc(S.ws)} workspace.</p>
+ ${f.length?`<div class="card" style="border-color:var(--bad);margin-bottom:16px"><b>${f.length} post failed to publish.</b> <a href="#posts">Review and retry</a></div>`:''}
+ <div class="grid g4"><div class="card stat"><b>${up.length}</b><span>Scheduled posts</span></div><div class="card stat"><b>${pub.length}</b><span>Published posts</span></div><div class="card stat"><b>${(r/1000).toFixed(1)}k</b><span>Total reach</span></div><div class="card stat"><b>${e}%</b><span>Avg. engagement</span></div></div>
+ <div class="grid g2" style="margin-top:16px"><div class="card"><h2>Reach growth (thousands)</h2>${bars(S.hist,['Jun','Jul','Aug','Sep','Oct','Nov'])}</div>
+ <div class="card"><h2>Next up</h2>${up.slice(0,4).map(p=>`<div class="item"><div>${esc(p.caption.slice(0,46))}<div class="mute">${p.platforms.join(', ')} · ${fd(p.date)}</div></div>${st(p.status)}</div>`).join('')||'<p class="mute">Nothing scheduled. Create a post to get started.</p>'}</div></div>`},
+clients(){return `<h1>Clients</h1><p class="sub">Each client keeps its own posts and campaigns.</p>
+ <div class="grid g2"><div class="card"><h2>Add client</h2><label>Name</label><input id="cn"><label>Industry</label><input id="ci"><label>Email</label><input id="ce" type="email"><p><button class="btn" onclick="addClient()">Add client</button></p></div>
+ <div class="card"><h2>${S.clients.length} clients</h2>${S.clients.map(c=>`<div class="item"><div><b>${esc(c.name)}</b><div class="mute">${esc(c.industry)} · ${esc(c.email)}</div></div><div class="row"><span class="mute">${S.posts.filter(p=>p.client==c.id).length} posts</span><button class="btn bad sm" onclick="delClient(${c.id})">Remove</button></div></div>`).join('')}</div></div>`},
+accounts(){return `<h1>Social accounts</h1><p class="sub">Connect the profiles you publish to. The live version connects through each platform’s official login.</p>
+ <div class="grid g4">${PL.map(p=>{const h=S.accounts[p];return `<div class="card"><h2>${p}</h2><p class="mute">${h?'Connected as '+esc(h):'Not connected'}</p>${h?`<button class="btn alt sm" onclick="disc('${p}')">Disconnect</button>`:`<button class="btn sm" onclick="conn('${p}')">Connect</button>`}</div>`}).join('')}</div>`},
+posts(){const o={draft:0,failed:1,scheduled:2,published:3};
+ return `<div class="row sp"><div><h1>Posts</h1><p class="sub">Every draft, scheduled and published post.</p></div><a class="btn" href="#create" onclick="edit=null" style="text-decoration:none">New post</a></div>
+ <div class="card">${[...S.posts].sort((a,b)=>o[a.status]-o[b.status]||a.date.localeCompare(b.date)).map(p=>`<div class="item"><div style="flex:1;min-width:220px">${esc(p.caption)}<div class="mute">${esc(p.tags)} · ${p.platforms.join(', ')||'No platform'} · ${fd(p.date)} · ${esc(cname(p.client))}</div></div><div class="row">${st(p.status)}
+ ${p.status=='failed'?`<button class="btn sm" onclick="publish(${p.id})">Retry</button>`:''}${p.status=='scheduled'||p.status=='draft'?`<button class="btn alt sm" onclick="publish(${p.id})">Publish now</button>`:''}
+ <button class="btn alt sm" onclick="edit=${p.id};go('create')">Edit</button><button class="btn bad sm" onclick="delPost(${p.id})">Delete</button></div></div>`).join('')}</div>`},
+create(){const p=S.posts.find(x=>x.id==edit)||{caption:'',tags:'',platforms:[],date:iso(1,10),client:S.clients[0]?.id};
+ return `<h1>${edit?'Edit post':'Create post'}</h1><p class="sub">Write once, then choose where and when it goes out.</p>
+ <div class="card" style="max-width:700px"><label>Client</label><select id="fc">${S.clients.map(c=>`<option value="${c.id}" ${c.id==p.client?'selected':''}>${esc(c.name)}</option>`).join('')}</select>
+ <label>Caption</label><textarea id="fcap">${esc(p.caption)}</textarea><label>Hashtags</label><input id="ft" value="${esc(p.tags)}" placeholder="#launch #offer">
+ <label>Platforms</label><div class="plat">${PL.map(x=>`<label><input type="checkbox" class="fp" value="${x}" ${p.platforms.includes(x)?'checked':''}>${x}</label>`).join('')}</div>
+ <label>Publish date and time</label><input id="fd" type="datetime-local" value="${p.date}">
+ <p class="row"><button class="btn" onclick="savePost('scheduled')">Schedule post</button><button class="btn alt" onclick="savePost('draft')">Save draft</button></p></div>`},
+calendar(){const d=new Date();d.setMonth(d.getMonth()+cm,1);const y=d.getFullYear(),m=d.getMonth(),n=new Date(y,m+1,0).getDate(),td=new Date();let c='';
+ ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(w=>c+=`<div class="h">${w}</div>`);for(let i=0;i<d.getDay();i++)c+='<div style="visibility:hidden"></div>';
+ for(let i=1;i<=n;i++){const k=`${y}-${z(m+1)}-${z(i)}`,t=td.getFullYear()==y&&td.getMonth()==m&&td.getDate()==i;c+=`<div class="${t?'t':''}"><b>${i}</b>${S.posts.filter(p=>p.date.startsWith(k)).map(p=>`<em title="${esc(p.caption)}">${esc(p.caption)}</em>`).join('')}</div>`}
+ return `<div class="row sp"><div><h1>Content calendar</h1><p class="sub">${d.toLocaleString([],{month:'long',year:'numeric'})}</p></div><div class="row"><button class="btn alt sm" onclick="cm--;render()">Previous</button><button class="btn alt sm" onclick="cm=0;render()">Today</button><button class="btn alt sm" onclick="cm++;render()">Next</button></div></div><div class="cal">${c}</div>`},
+campaigns(){return `<h1>Campaigns</h1><p class="sub">Goals, budgets and progress in one place.</p>
+ <div class="grid g2"><div class="card"><h2>New campaign</h2><label>Name</label><input id="kn"><label>Goal</label><input id="kg"><label>Budget (₹)</label><input id="kb" type="number" min="0"><p><button class="btn" onclick="addCamp()">Create campaign</button></p></div>
+ <div class="card">${S.camps.map(c=>`<div class="item" style="display:block"><div class="row sp"><b>${esc(c.name)}</b><button class="btn bad sm" onclick="delCamp(${c.id})">Delete</button></div><div class="mute">${esc(c.goal)} · Budget ₹${Number(c.budget).toLocaleString('en-IN')}</div><div class="bar"><div style="width:${c.progress}%"></div></div><div class="row sp mute" style="margin-top:6px"><span>${c.progress}% of goal</span><input type="range" value="${c.progress}" style="width:140px" aria-label="Progress" onchange="setProg(${c.id},this.value)"></div></div>`).join('')||'<p class="mute">No campaigns yet.</p>'}</div></div>`},
+analytics(){const pub=my('published'),by=PL.map(p=>pub.filter(x=>x.platforms.includes(p)).reduce((a,x)=>a+x.reach,0)/1000);
+ return `<h1>Analytics</h1><p class="sub">Reach and engagement from published posts.</p>
+ <div class="grid g2"><div class="card"><h2>Monthly reach (thousands)</h2>${bars(S.hist,['Jun','Jul','Aug','Sep','Oct','Nov'])}</div><div class="card"><h2>Reach by platform (thousands)</h2>${bars(by.map(v=>+v.toFixed(1)),PL.map(p=>p.slice(0,5)),'var(--ok)')}</div></div>
+ <div class="card" style="margin-top:16px"><h2>Top posts</h2>${[...pub].sort((a,b)=>b.reach-a.reach).map(p=>`<div class="item"><div>${esc(p.caption)}<div class="mute">${p.platforms.join(', ')}</div></div><div class="mute">${p.reach.toLocaleString()} reach · ${p.eng}% engagement</div></div>`).join('')||'<p class="mute">Publish a post to see results here.</p>'}</div>`},
+settings(){return `<h1>Settings</h1><p class="sub">Workspace, team and appearance.</p>
+ <div class="grid g2"><div class="card"><h2>Workspace</h2><label>Workspace name</label><input value="${esc(A.wss[cu().ws].name)}" onchange="A.wss[cu().ws].name=this.value.trim()||'Workspace';save();toast('Saved')"><label>Your role (preview only)</label><select onchange="S.user.role=this.value;render()">${['Workspace Admin','Manager','Editor','Viewer'].map(r=>`<option ${S.user.role==r?'selected':''}>${r}</option>`).join('')}</select><label>Workspace type</label><select onchange="S.ws=this.value;save();toast('Saved')">${['business','agency','creator'].map(w=>`<option ${S.ws==w?'selected':''}>${w}</option>`).join('')}</select>
+ <label>Theme</label><select onchange="S.theme=this.value;save();render()">${['auto','light','dark'].map(w=>`<option ${S.theme==w?'selected':''}>${w}</option>`).join('')}</select><p><button class="btn alt" onclick="ask('Reset this workspace to sample data?',()=>{A.wss[cu().ws].data=seed();S=null;save();render()})">Reset demo data</button></p></div>
+ <div class="card"><h2>Team</h2>${S.team.map(t=>`<div class="item"><span>${esc(t.name)}</span><span class="tag">${t.role}</span></div>`).join('')}<div class="row" style="margin-top:12px"><input id="tn" placeholder="Name" style="flex:1"><select id="tr" style="width:110px"><option>Editor</option><option>Viewer</option><option>Admin</option></select><button class="btn sm" onclick="addTeam()">Invite</button></div></div></div>`}
+};
+/* ---------- actions ---------- */
+function go(r){location.hash=r}
+function addClient(){const n=$('#cn').value.trim();if(!n)return toast('Enter a client name');S.clients.push({id:nid(S.clients),name:n,industry:$('#ci').value,email:$('#ce').value});save();render()}
+function delClient(id){S.clients=S.clients.filter(c=>c.id!=id);save();render()}
+function conn(p){S.accounts[p]='@'+p.toLowerCase()+'.'+S.user.name.toLowerCase().replace(/\W/g,'');save();render();toast(p+' connected')}
+function disc(p){S.accounts[p]='';save();render()}
+function savePost(status){const cap=$('#fcap').value.trim(),pl=[...document.querySelectorAll('.fp:checked')].map(x=>x.value);
+ if(!cap)return toast('Write a caption first');if(status=='scheduled'&&!pl.length)return toast('Choose at least one platform');
+ const bad=pl.find(p=>!S.accounts[p]);if(status=='scheduled'&&bad)return toast('Connect '+bad+' first');
+ const o={caption:cap,tags:$('#ft').value,platforms:pl,date:$('#fd').value,client:+$('#fc').value,status};
+ if(edit)Object.assign(S.posts.find(p=>p.id==edit),o);else S.posts.push({id:nid(S.posts),reach:0,eng:0,...o});
+ edit=null;save();toast(status=='draft'?'Draft saved':'Post scheduled');go('posts')}
+function publish(id){const p=S.posts.find(x=>x.id==id);p.status='published';p.reach=Math.round(2000+Math.random()*6000);p.eng=+(3+Math.random()*4).toFixed(1);save();render();toast('Published')}
+function delPost(id){S.posts=S.posts.filter(p=>p.id!=id);save();render()}
+function addCamp(){const n=$('#kn').value.trim();if(!n)return toast('Enter a campaign name');S.camps.push({id:nid(S.camps),name:n,goal:$('#kg').value,budget:+$('#kb').value||0,progress:0});save();render()}
+function delCamp(id){S.camps=S.camps.filter(c=>c.id!=id);save();render()}
+function setProg(id,v){S.camps.find(c=>c.id==id).progress=+v;save();render()}
+function addTeam(){const n=$('#tn').value.trim();if(!n)return;S.team.push({name:n,role:$('#tr').value});save();render();toast('Invitation recorded')}
+let uq='',us='',_cb;
+const cu=()=>A.users.find(x=>x.id==A.session?.uid&&x.status=='active');
+const need=a=>{const r=S.user.role;if(r=='Workspace Admin'||{Manager:['clients','posts','campaigns','accounts'],Editor:['posts']}[r]?.includes(a))return true;toast(r+' role cannot change '+a);return false};
+[['addClient','clients'],['delClient','clients'],['conn','accounts'],['disc','accounts'],['savePost','posts'],['publish','posts'],['delPost','posts'],['addCamp','campaigns'],['delCamp','campaigns'],['setProg','campaigns'],['addTeam','team']].forEach(([f,a])=>{const o=window[f];window[f]=(...x)=>need(a)&&o(...x)});
+const closeM=()=>$('#md')?.remove();
+const modal=h=>{closeM();const e=document.createElement('div');e.className='ov';e.id='md';e.innerHTML='<div class="card">'+h+'</div>';e.onclick=ev=>{if(ev.target==e)closeM()};document.body.append(e)};
+const ask=(m,f)=>{_cb=f;modal(`<h2>Please confirm</h2><p>${esc(m)}</p><p class="row"><button class="btn" onclick="const f=_cb;closeM();f()">Confirm</button><button class="btn alt" onclick="closeM()">Cancel</button></p>`)};
+function go2(r){route=r;try{history.replaceState(null,'','#'+r)}catch(e){}render()}
+const okMail=e=>/^\S+@\S+\.\S+$/.test(e);
+function enter(u){go2(u.role=='Super Admin'?'admin-dashboard':'dashboard')}
+function doLogin(adm){const e=$('#le').value.trim().toLowerCase(),p=$('#lp').value;
+ if(!okMail(e))return toast('Enter a valid email address');if(!p)return toast('Enter your password');
+ const u=A.users.find(x=>x.email==e);if(!u||u.h!=hs(p))return toast('Incorrect email or password');
+ if((u.role=='Super Admin')!=adm)return toast(adm?'This is not an administrator account. Use the user sign in.':'Administrators sign in at the admin portal.');
+ if(u.status!='active')return toast('This account is '+u.status+'. Contact the platform admin.');
+ A.session={uid:u.id,rem:$('#lr').checked};try{sessionStorage.setItem('sf-live','1')}catch(x){}log(u.name+' signed in');save();enter(u)}
+function doReg(){const n=$('#rn').value.trim(),e=$('#re').value.trim().toLowerCase(),p=$('#rp').value,w=$('#rw').value.trim();
+ if(n.length<2)return toast('Enter your full name');if(!okMail(e))return toast('Enter a valid email address');if(p.length<8)return toast('Password needs at least 8 characters');
+ if(p!=$('#rc').value)return toast('Passwords do not match');if(!w)return toast('Enter a workspace name');if(A.users.some(x=>x.email==e))return toast('An account with this email already exists');
+ const wid=Math.max(0,...Object.keys(A.wss))+1,u={id:nid(A.users),name:n,email:e,h:hs(p),role:'Workspace Admin',ws:wid,status:'active',at:iso(0,new Date().getHours())};
+ A.wss[wid]={name:w,data:emptyWs($('#rt').value)};A.users.push(u);A.session={uid:u.id,rem:true};try{sessionStorage.setItem('sf-live','1')}catch(x){}log(n+' registered workspace '+w);save();enter(u)}
+function logout(){const adm=cu()?.role=='Super Admin';A.session=null;S=null;save();go2(adm?'admin-login':'login')}
+const pw=id=>`<div style="position:relative"><input id="${id}" type="password" style="padding-right:64px"><button type="button" class="btn alt sm" style="position:absolute;right:4px;top:4px" onclick="const i=$('#${id}');i.type=i.type=='password'?'text':'password';this.textContent=i.type=='password'?'Show':'Hide'">Show</button></div>`;
+const REG=()=>`<label>Full name</label><input id="rn" autocomplete="name"><label>Email</label><input id="re" type="email"><label>Password</label>${pw('rp')}<label>Confirm password</label>${pw('rc')}<label>Workspace name</label><input id="rw"><label>Workspace type</label><select id="rt"><option value="business">Business</option><option value="agency">Digital Marketing Agency</option><option value="creator">Creator</option></select><p><button class="btn" style="width:100%" onclick="doReg()">Create account</button></p>`;
+const pub=adm=>{const r=route=='register';return `<div class="auth"><div class="hero" style="${adm?'background:linear-gradient(160deg,#1a0f3c,#4a2fbd)':''}"><h1>${adm?'SocialFlow administration':'Plan, publish and prove your social results.'}</h1><p>${adm?'Manage users, workspaces and platform activity.':'One workspace for businesses, agencies and creators to schedule posts, run campaigns and read the numbers.'}</p></div>
+<div class="form"><div class="card"><h2>${adm?'Admin sign in':r?'Create your account':'Sign in'}</h2>${r?REG():`<label>${adm?'Admin email':'Email'}</label><input id="le" type="email" autocomplete="username"><label>Password</label>${pw('lp')}<div class="row sp" style="margin-top:12px"><label class="row" style="margin:0;font-weight:500"><input id="lr" type="checkbox" style="width:auto">Remember me</label><a href="#" onclick="toast('If this email exists, a reset link would be sent (demo)');return false">Forgot password?</a></div><p><button class="btn" style="width:100%" onclick="doLogin(${adm})">Sign in</button></p>`}
+<p class="mute">${adm?'<a href="#login">User sign in</a>':r?'Have an account? <a href="#login">Sign in</a>':'New here? <a href="#register">Create an account</a> or <a href="#admin-login">open the admin portal</a>'}</p>${r?'':`<p class="mute">Demo login: ${adm?'admin@socialflow.demo / Admin@123':'maya@brewbloom.com / User@123'}. Simulated sign-in only.</p>`}</div></div></div>`};
+/* ---------- admin ---------- */
+const wst=w=>({c:w.data.clients.length,p:w.data.posts.length,a:Object.values(w.data.accounts).filter(Boolean).length});
+const utable=()=>{const q=uq.toLowerCase(),L=A.users.filter(u=>u.role!='Super Admin'&&(!us||u.status==us)&&(u.name+u.email).toLowerCase().includes(q));
+ return L.length?`<div class="tblw"><table class="tbl"><tr><th>User</th><th>Role</th><th>Workspace</th><th>Status</th><th></th></tr>${L.map(u=>`<tr><td><b>${esc(u.name)}</b><div class="mute">${esc(u.email)}</div></td><td>${u.role}</td><td>${esc(A.wss[u.ws]?.name||'')}</td><td><select aria-label="Status" style="width:auto" onchange="setSt(${u.id},this.value)">${['active','inactive','suspended'].map(s=>`<option ${u.status==s?'selected':''}>${s}</option>`).join('')}</select></td><td><div class="row"><button class="btn alt sm" onclick="viewU(${u.id})">View</button><button class="btn alt sm" onclick="editU(${u.id})">Edit</button><button class="btn bad sm" onclick="delU(${u.id})">Delete</button></div></td></tr>`).join('')}</table></div>`:'<p class="mute">No users match. Clear the search or filter.</p>'};
+const U=id=>A.users.find(x=>x.id==id),refresh=()=>{const t=$('#utb');if(t)t.innerHTML=utable()};
+function setSt(id,v){const u=U(id);u.status=v;log('Admin set '+u.name+' to '+v);save();toast(u.name+' is now '+v)}
+function viewU(id){const u=U(id),w=A.wss[u.ws],t=w?wst(w):{c:0,p:0,a:0};modal(`<h2>${esc(u.name)}</h2><p class="mute">${esc(u.email)}</p><div class="item"><span>Role</span><b>${u.role}</b></div><div class="item"><span>Status</span>${st(u.status)}</div><div class="item"><span>Joined</span><b>${fd(u.at)}</b></div><div class="item"><span>Workspace</span><b>${esc(w?.name||'None')}</b></div><div class="item"><span>Clients, posts, accounts</span><b>${t.c}, ${t.p}, ${t.a}</b></div><p><button class="btn alt" onclick="closeM()">Close</button></p>`)}
+function editU(id){const u=U(id);modal(`<h2>Edit user</h2><label>Full name</label><input id="eun" value="${esc(u.name)}"><label>Email</label><input id="eue" value="${esc(u.email)}"><label>Role</label><select id="eur">${['Workspace Admin','Manager','Editor','Viewer'].map(r=>`<option ${u.role==r?'selected':''}>${r}</option>`).join('')}</select><p class="row"><button class="btn" onclick="saveU(${id})">Save changes</button><button class="btn alt" onclick="closeM()">Cancel</button></p>`)}
+function saveU(id){const u=U(id),n=$('#eun').value.trim(),e=$('#eue').value.trim().toLowerCase();if(n.length<2)return toast('Enter a name');if(!okMail(e))return toast('Enter a valid email');if(A.users.some(x=>x.id!=id&&x.email==e))return toast('Email already in use');
+ Object.assign(u,{name:n,email:e,role:$('#eur').value});log('Admin updated '+n);save();closeM();refresh();toast('User updated')}
+function delU(id){const u=U(id);ask('Delete '+u.name+' and their account? This cannot be undone.',()=>{A.users=A.users.filter(x=>x.id!=id);if(!A.users.some(x=>x.ws==u.ws))delete A.wss[u.ws];log('Admin deleted '+u.name);save();refresh();toast('Account deleted')})}
+function viewW(id){const w=A.wss[id],t=wst(w);modal(`<h2>${esc(w.name)}</h2><div class="item"><span>Type</span><b>${w.data.ws}</b></div><div class="item"><span>Members</span><b>${A.users.filter(u=>u.ws==id).map(u=>esc(u.name)).join(', ')}</b></div><div class="item"><span>Clients</span><b>${t.c}</b></div><div class="item"><span>Posts</span><b>${t.p}</b></div><div class="item"><span>Connected accounts</span><b>${t.a}</b></div><p class="mute">Admins see counts only. Workspace content stays private.</p><p><button class="btn alt" onclick="closeM()">Close</button></p>`)}
+function admPw(){const u=cu();if(u.h!=hs($('#cp').value))return toast('Current password is incorrect');const n=$('#np').value;if(n.length<8)return toast('New password needs at least 8 characters');u.h=hs(n);log('Admin changed password');save();toast('Password updated')}
+const AV={
+dashboard(){const P=A.users.filter(u=>u.role!='Super Admin'),W=Object.values(A.wss),acc=W.reduce((a,w)=>a+wst(w).a,0),fl=W.reduce((a,w)=>a+w.data.posts.filter(p=>p.status=='failed').length,0);
+ const ms=[...Array(6)].map((_,i)=>{const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-5+i);return d}),rg=ms.map(d=>P.filter(u=>{const t=new Date(u.at);return t.getMonth()==d.getMonth()&&t.getFullYear()==d.getFullYear()}).length);
+ return `<h1>Platform overview</h1><p class="sub">Live totals across every workspace.</p><div class="grid g4">${[[P.length,'Registered users'],[P.filter(u=>u.status=='active').length,'Active users'],[W.filter(w=>w.data.ws=='agency').length,'Agencies'],[W.filter(w=>w.data.ws=='business').length,'Business workspaces'],[acc,'Connected social accounts']].map(s=>`<div class="card stat"><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>
+ <div class="grid g2" style="margin-top:16px"><div class="card"><h2>New registrations by month</h2>${bars(rg,ms.map(d=>d.toLocaleString([],{month:'short'})))}</div><div class="card"><h2>System notifications</h2><div class="item"><span>Failed posts awaiting retry</span><b>${fl}</b></div><div class="item"><span>Suspended accounts</span><b>${P.filter(u=>u.status=='suspended').length}</b></div><div class="item"><span>Inactive accounts</span><b>${P.filter(u=>u.status=='inactive').length}</b></div></div></div>
+ <div class="card" style="margin-top:16px"><h2>Recent platform activity</h2>${A.log.slice(0,6).map(l=>`<div class="item"><span>${esc(l.m)}</span><span class="mute">${fd(l.t)}</span></div>`).join('')||'<p class="mute">No activity yet.</p>'}</div>`},
+users(){return `<h1>Users</h1><p class="sub">Set a user to Suspended to block sign-in, or to Active to restore access.</p><div class="card"><div class="row" style="margin-bottom:12px"><input placeholder="Search name or email" value="${esc(uq)}" oninput="uq=this.value;refresh()" style="flex:1;min-width:200px"><select style="width:auto" aria-label="Filter by status" onchange="us=this.value;refresh()"><option value="">All statuses</option>${['active','inactive','suspended'].map(s=>`<option ${us==s?'selected':''}>${s}</option>`).join('')}</select></div><div id="utb">${utable()}</div></div>`},
+workspaces(){return `<h1>Workspaces</h1><p class="sub">Each workspace keeps its own data.</p><div class="card tblw"><table class="tbl"><tr><th>Workspace</th><th>Type</th><th>Owner</th><th>Members</th><th>Clients</th><th>Accounts</th><th></th></tr>${Object.entries(A.wss).map(([id,w])=>{const t=wst(w),o=A.users.find(u=>u.ws==id);return `<tr><td><b>${esc(w.name)}</b></td><td>${w.data.ws}</td><td>${esc(o?.name||'')}</td><td>${A.users.filter(u=>u.ws==id).length}</td><td>${t.c}</td><td>${t.a}</td><td><button class="btn alt sm" onclick="viewW(${id})">View</button></td></tr>`}).join('')}</table></div>`},
+activity(){return `<div class="row sp"><div><h1>Activity logs</h1><p class="sub">Sign-ins, registrations and admin changes.</p></div><button class="btn alt" onclick="ask('Clear all activity logs?',()=>{A.log=[];save();render()})">Clear logs</button></div><div class="card">${A.log.map(l=>`<div class="item"><span>${esc(l.m)}</span><span class="mute">${fd(l.t)}</span></div>`).join('')||'<p class="mute">No activity recorded yet.</p>'}</div>`},
+settings(){return `<h1>Admin settings</h1><p class="sub">Protect the administrator account.</p><div class="card" style="max-width:440px"><label>Current password</label>${pw('cp')}<label>New password</label>${pw('np')}<p><button class="btn" onclick="admPw()">Update password</button></p></div><div class="card" style="max-width:440px;margin-top:16px"><h2>Reset platform</h2><p class="mute">Removes every registered user and workspace and restores the demo data.</p><button class="btn bad" onclick="ask('Reset all platform data?',()=>{A=seedA();S=null;save();go2('admin-login')})">Reset platform</button></div>`}};
+/* ---------- shell ---------- */
+function render(){const u=cu(),adm=u&&u.role=='Super Admin',isA=route.startsWith('admin-'),R=document.documentElement;
+ if(isA&&route!='admin-login'&&!adm){if(u)toast('That area is for administrators only');return go2(u?'dashboard':'admin-login')}
+ if(route=='admin-login'&&adm)return go2('admin-dashboard');
+ if(!isA){if(adm)return go2('admin-dashboard');if(route=='login'||route=='register'){if(u)return go2('dashboard')}else if(!u)return go2('login')}
+ if(u&&!adm){const d=A.wss[u.ws].data;if(S!==d){S=d;S.user={name:u.name,email:u.email,role:u.role}}}
+ const th=u&&!adm?S.theme:'auto';th=='auto'?R.removeAttribute('data-theme'):R.setAttribute('data-theme',th);
+ const root=$('#root');
+ if(route=='admin-login'){root.innerHTML=pub(true);return}
+ if(route=='login'||route=='register'){root.innerHTML=pub(false);return}
+ const key=isA?route.slice(6):route,VV=isA?AV:V;if(!VV[key])return go2(isA?'admin-dashboard':'dashboard');
+ const nav=isA?[['admin-dashboard','Overview'],['admin-users','Users'],['admin-workspaces','Workspaces'],['admin-activity','Activity logs'],['admin-settings','Settings']]:[['dashboard','Dashboard'],['clients','Clients'],['accounts','Social accounts'],['posts','Posts'],['create','Create post'],['calendar','Calendar'],['campaigns','Campaigns'],['analytics','Analytics'],['settings','Settings']].filter(n=>!(S.user.role=='Viewer'&&n[0]=='create'));
+ const me=isA?`${esc(u.name)}<br>Super Admin`:`${esc(S.user.name)}<br>${esc(A.wss[u.ws].name)}<br>${S.user.role}`;
+ root.innerHTML=`<div class="app"><aside class="${isA?'adm':''}"><div class="logo">Social<i>Flow</i>${isA?' Admin':''}</div>${nav.map(n=>`<a href="#${n[0]}" class="${route==n[0]?'on':''}">${n[1]}</a>`).join('')}<a href="#" onclick="logout();return false">Log out</a><div class="me">${me}</div></aside><main>${VV[key]()}</main></div>`}
+try{if(A.session&&!A.session.rem&&!sessionStorage.getItem('sf-live'))A.session=null}catch(e){}
+addEventListener('hashchange',()=>{route=location.hash.slice(1)||'dashboard';render()});
+render();
+</script></body></html>
